@@ -18,48 +18,89 @@ const questions = [
   { question: "What punctuation marks an omission or pause?", answer: "..." },
   { question: "What punctuation is used in web addresses?", answer: "/" },
   { question: "What punctuation is used to connect words like well-known?", answer: "-" },
-  { question: "What punctuation is used in email addresses?", answer: "@" },
-  { question: "What punctuation is used in hashtags?", answer: "#" },
-  { question: "What punctuation separates clauses?", answer: "," },
-  { question: "What punctuation ends exclamatory sentences?", answer: "!" },
-  { question: "What punctuation is used to show quotations?", answer: "\"" },
-  { question: "What punctuation is used in decimals?", answer: "." },
-  { question: "What punctuation is used in fractions like 3/4?", answer: "/" },
-  { question: "What punctuation indicates an abbreviation like Dr.?", answer: "." },
-  { question: "What punctuation shows an aside (like this)?", answer: ")" },
-  { question: "What punctuation can break up a sentence – like this?", answer: "–" },
-  { question: "What punctuation is used in a question tag, like isn't it?", answer: "?" },
-  { question: "What punctuation signals excitement?!", answer: "!" },
-  { question: "What punctuation is used in code like <html>?", answer: "<" },
-  { question: "What punctuation is used in percentages?", answer: "%" },
-  { question: "What punctuation is used in equations like 5+3?", answer: "+" },
-  { question: "What punctuation is used for footnotes?", answer: "*" }
-];
+  { question: "What punctuation is used in email addresses?", answer: "@" }
+]; // solo 15 preguntas
 
 let current = 0;
+let score = 0;
+let timer;
+const timeLimit = 30;
+let timeLeft = timeLimit;
+
+// Mostrar puntaje
+const scoreDisplay = document.createElement("p");
+scoreDisplay.id = "score";
+scoreDisplay.innerText = `Score: ${score}`;
+document.querySelector(".container").appendChild(scoreDisplay);
+
+// Mostrar temporizador
+const timerDisplay = document.createElement("p");
+timerDisplay.id = "timer";
+timerDisplay.innerText = `Time left: ${timeLeft}s`;
+document.querySelector(".container").appendChild(timerDisplay);
+
+// Iniciar temporizador
+function startTimer() {
+  clearInterval(timer);
+  timeLeft = timeLimit;
+  timerDisplay.innerText = `Time left: ${timeLeft}s`;
+
+  timer = setInterval(() => {
+    timeLeft--;
+    timerDisplay.innerText = `Time left: ${timeLeft}s`;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      score -= 5;
+      feedback.innerText = "⏰ Time's up! −5 points.";
+      updateScore();
+      nextLevel();
+    }
+  }, 1000);
+}
+
+function updateScore() {
+  scoreDisplay.innerText = `Score: ${score}`;
+}
 
 function showQuestion() {
-  if (current < questions.length) {
+  if (current < questions.length && current < 15) {
     questionEl.innerText = `Level ${current + 1}: ${questions[current].question}`;
     input.value = "";
     feedback.innerText = "";
     input.focus();
+    startTimer();
   } else {
-    questionEl.innerText = "Congratulations! You completed all 30 levels!";
-    form.style.display = "none";
+    endGame();
   }
+}
+
+function endGame() {
+  clearInterval(timer);
+  questionEl.innerText = `🎉 Game Over! Your final score is: ${score}`;
+  form.style.display = "none";
+  timerDisplay.style.display = "none";
 }
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const userAnswer = input.value.trim();
+  clearInterval(timer);
   if (userAnswer === questions[current].answer) {
-    feedback.innerText = "Correct!";
-    current++;
-    showQuestion();
+    feedback.innerText = "✅ Correct!";
+    score += 10;
   } else {
-    feedback.innerText = "Try again.";
+    feedback.innerText = "❌ Incorrect! −5 points.";
+    score -= 5;
   }
+  updateScore();
+  nextLevel();
 });
+
+function nextLevel() {
+  current++;
+  setTimeout(() => {
+    showQuestion();
+  }, 1000);
+}
 
 showQuestion();
