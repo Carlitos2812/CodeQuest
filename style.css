@@ -1,33 +1,88 @@
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #f4f4f4;
+/* General reset */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
+
+body {
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
 .container {
-  margin-top: 100px;
-  background: white;
-  display: inline-block;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
 }
-input {
+
+h1 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 20px;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+input[type="text"] {
   padding: 10px;
   font-size: 16px;
-  width: 60%;
-  margin: 10px 0;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  transition: 0.3s;
 }
+
+input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
 button {
-  padding: 10px 20px;
+  padding: 10px;
   font-size: 16px;
-  background-color: dodgerblue;
-  color: white;
+  background-color: #007bff;
   border: none;
-  border-radius: 5px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
+button:hover {
+  background-color: #0056b3;
+}
+
 #feedback {
-  margin-top: 15px;
-  font-weight: bold;
+  font-size: 16px;
+  margin-top: 10px;
+  color: #555;
+  min-height: 20px;
 }
+
+/* Puntaje y temporizador */
+#score, #timer {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 15px;
+}
+
