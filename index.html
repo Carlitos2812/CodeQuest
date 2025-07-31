@@ -1,28 +1,36 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CodeQuest - Maestro de Puntuación</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeQuest - Punctuation Master</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <div id="start-screen">
-      <h1>🚀 CodeQuest - Maestro de Puntuación 🌌</h1>
-
-      <label for="language-select">Idioma / Language:</label>
+      <h1>🚀 CodeQuest - Punctuation Master 🌌</h1>
+      <label for="language-select">Choose language / Elige idioma:</label>
       <select id="language-select">
-        <option value="es">Español</option>
         <option value="en">English</option>
+        <option value="es">Español</option>
       </select>
-
-      <button id="start-button">Jugar / Play</button>
-      <p class="credits">Con cariño para Mafecita y Pedrito 💫</p>
+      <button id="start-button">Play / Jugar</button>
+      <p class="credits">Créditos: Mafecita 🌟 y Pedrito 🚀</p>
     </div>
 
-    <div id="game-screen" style="display:none;">
-      <h2 id="question">Cargando pregunta...</h2>
+    <div id="game-screen" style="display: none;">
+      <p id="question"></p>
       <form id="game-form">
-        <input id="user-input" type="text" autocomplete="off" placeholder="Escribe tu respuesta" required />
-        <button type
+        <input type="text" id="user-input" placeholder="Type your answer" required />
+        <button type="submit" id="submit-btn">Submit</button>
+      </form>
+      <p id="feedback"></p>
+      <p id="score"></p>
+      <p id="timer"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
