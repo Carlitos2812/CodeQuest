@@ -1,3 +1,14 @@
+// Pantalla de inicio
+const startBtn = document.getElementById("start-btn");
+const startScreen = document.getElementById("start-screen");
+const gameContainer = document.getElementById("game-container");
+
+startBtn.addEventListener("click", () => {
+  startScreen.classList.add("hidden");
+  gameContainer.classList.remove("hidden");
+  showQuestion();
+});
+
 const form = document.getElementById("game-form");
 const input = document.getElementById("user-input");
 const feedback = document.getElementById("feedback");
@@ -19,24 +30,23 @@ const questions = [
   { question: "What punctuation is used in web addresses?", answer: "/" },
   { question: "What punctuation is used to connect words like well-known?", answer: "-" },
   { question: "What punctuation is used in email addresses?", answer: "@" }
-];
+]; // solo 15 niveles
 
 let current = 0;
 let score = 0;
 let timer;
-const timeLimit = 30; // seconds
+const timeLimit = 30;
 let timeLeft = timeLimit;
 
-const scoreDisplay = document.createElement("p");
-scoreDisplay.id = "score";
+// Mostrar puntaje
+const scoreDisplay = document.getElementById("score");
 scoreDisplay.innerText = `Score: ${score}`;
-document.querySelector(".container").appendChild(scoreDisplay);
 
-const timerDisplay = document.createElement("p");
-timerDisplay.id = "timer";
+// Mostrar temporizador
+const timerDisplay = document.getElementById("timer");
 timerDisplay.innerText = `Time left: ${timeLeft}s`;
-document.querySelector(".container").appendChild(timerDisplay);
 
+// Iniciar temporizador
 function startTimer() {
   clearInterval(timer);
   timeLeft = timeLimit;
@@ -48,7 +58,7 @@ function startTimer() {
     if (timeLeft <= 0) {
       clearInterval(timer);
       score -= 5;
-      feedback.innerText = "Time's up! −5 points.";
+      feedback.innerText = "⏰ Time's up! −5 points.";
       updateScore();
       nextLevel();
     }
@@ -99,5 +109,3 @@ function nextLevel() {
     showQuestion();
   }, 1000);
 }
-
-showQuestion();
