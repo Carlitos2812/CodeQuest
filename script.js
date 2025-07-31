@@ -24,7 +24,7 @@ const questions = [
 let current = 0;
 let score = 0;
 let timer;
-const timeLimit = 30;
+const timeLimit = 30; // seconds
 let timeLeft = timeLimit;
 
 const scoreDisplay = document.createElement("p");
@@ -34,4 +34,70 @@ document.querySelector(".container").appendChild(scoreDisplay);
 
 const timerDisplay = document.createElement("p");
 timerDisplay.id = "timer";
-timerDisplay.innerText = `Time left: ${timeLeft}s`
+timerDisplay.innerText = `Time left: ${timeLeft}s`;
+document.querySelector(".container").appendChild(timerDisplay);
+
+function startTimer() {
+  clearInterval(timer);
+  timeLeft = timeLimit;
+  timerDisplay.innerText = `Time left: ${timeLeft}s`;
+
+  timer = setInterval(() => {
+    timeLeft--;
+    timerDisplay.innerText = `Time left: ${timeLeft}s`;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      score -= 5;
+      feedback.innerText = "Time's up! −5 points.";
+      updateScore();
+      nextLevel();
+    }
+  }, 1000);
+}
+
+function updateScore() {
+  scoreDisplay.innerText = `Score: ${score}`;
+}
+
+function showQuestion() {
+  if (current < questions.length && current < 15) {
+    questionEl.innerText = `Level ${current + 1}: ${questions[current].question}`;
+    input.value = "";
+    feedback.innerText = "";
+    input.focus();
+    startTimer();
+  } else {
+    endGame();
+  }
+}
+
+function endGame() {
+  clearInterval(timer);
+  questionEl.innerText = `🎉 Game Over! Your final score is: ${score}`;
+  form.style.display = "none";
+  timerDisplay.style.display = "none";
+}
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const userAnswer = input.value.trim();
+  clearInterval(timer);
+  if (userAnswer === questions[current].answer) {
+    feedback.innerText = "✅ Correct!";
+    score += 10;
+  } else {
+    feedback.innerText = "❌ Incorrect! −5 points.";
+    score -= 5;
+  }
+  updateScore();
+  nextLevel();
+});
+
+function nextLevel() {
+  current++;
+  setTimeout(() => {
+    showQuestion();
+  }, 1000);
+}
+
+showQuestion();
