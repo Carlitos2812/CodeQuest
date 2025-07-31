@@ -2,32 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CodeQuest - Punctuation Master</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Pantalla de inicio -->
-  <div id="start-screen" class="container">
-    <h1>🚀 CodeQuest</h1>
-    <p>¡Prepárate para dominar la puntuación!</p>
-    <button id="start-btn">Play</button>
+  <div class="container">
+    <div id="start-screen">
+      <h1>🚀 CodeQuest: Punctuation Master</h1>
+      <button id="start-btn">Play</button>
+      <div class="credits">
+        <p>Con ayuda de la profesora Mafe y el profesor Pedro ✨</p>
+      </div>
+    </div>
+
+    <div id="game-container" class="hidden">
+      <h2 id="question"></h2>
+      <form id="game-form">
+        <input type="text" id="user-input" autocomplete="off" placeholder="Your answer..." />
+        <button type="submit">Submit</button>
+      </form>
+      <p id="feedback"></p>
+      <p id="score">Score: 0</p>
+      <p id="timer">Time left: 30s</p>
+    </div>
   </div>
 
-  <!-- Juego -->
-  <div id="game-container" class="container hidden">
-    <h2 id="question">Loading...</h2>
-    <form id="game-form">
-      <input type="text" id="user-input" autocomplete="off" placeholder="Type your answer..." required />
-      <br />
-      <button type="submit">Submit</button>
-    </form>
-    <p id="feedback"></p>
-    <p id="score"></p>
-    <p id="timer"></p>
-    <p id="credits">Créditos: Prof. Mafe 💫 y Prof. Pedro 🌌</p>
-  </div>
-
+  <audio id="bg-music" src="bg-music.mp3" loop></audio>
   <script src="script.js"></script>
 </body>
 </html>
