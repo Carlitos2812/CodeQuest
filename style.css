@@ -1,88 +1,56 @@
-/* General reset */
-* {
+/* Fondo degradado vibrante */
+body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  background-color: #f4f4f4;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  color: #fff;
 }
 
+/* Caja principal */
 .container {
-  background-color: #ffffff;
-  padding: 30px 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.75);
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
   width: 90%;
   max-width: 500px;
   text-align: center;
 }
 
-h1 {
-  font-size: 28px;
-  color: #333;
-  margin-bottom: 20px;
+/* Títulos */
+.container h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+  color: #00e0ff;
 }
 
-h2 {
-  font-size: 20px;
-  color: #444;
-  margin-bottom: 15px;
+.container h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-}
-
+/* Entrada y botón */
 input[type="text"] {
-  padding: 10px;
-  font-size: 16px;
-  border: 2px solid #ccc;
-  border-radius: 6px;
-  transition: 0.3s;
-}
-
-input[type="text"]:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-button {
-  padding: 10px;
-  font-size: 16px;
-  background-color: #007bff;
+  width: 80%;
+  padding: 12px;
+  border-radius: 10px;
   border: none;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-#feedback {
   font-size: 16px;
-  margin-top: 10px;
-  color: #555;
-  min-height: 20px;
+  margin-bottom: 1rem;
+  outline: none;
+  box-shadow: 0 0 8px #00e0ff;
 }
 
-/* Puntaje y temporizador */
-#score, #timer {
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-  margin-top: 15px;
-}
+/* Botón con efecto */
+button {
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius:
+
 
