@@ -1,56 +1,75 @@
-/* Fondo degradado vibrante */
 body {
   margin: 0;
-  padding: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  height: 100vh;
+  background: radial-gradient(ellipse at center, #0a0a23 0%, #000 100%);
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  height: 100vh;
 }
 
-/* Caja principal */
 .container {
-  background: rgba(0, 0, 0, 0.75);
-  padding: 2.5rem 2rem;
-  border-radius: 20px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-  width: 90%;
-  max-width: 500px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem;
+  border-radius: 15px;
   text-align: center;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  max-width: 500px;
 }
 
-/* Títulos */
-.container h1 {
-  font-size: 2.2rem;
-  margin-bottom: 1.2rem;
-  color: #00e0ff;
+h1, h2 {
+  color: #00ffff;
+  text-shadow: 0 0 10px #00ffff;
 }
 
-.container h2 {
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-}
-
-/* Entrada y botón */
-input[type="text"] {
+input {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  margin-top: 1rem;
   width: 80%;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  font-size: 16px;
-  margin-bottom: 1rem;
-  outline: none;
-  box-shadow: 0 0 8px #00e0ff;
 }
 
-/* Botón con efecto */
 button {
-  padding: 10px 25px;
-  font-size: 16px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin-top: 1rem;
   border: none;
-  border-radius:
+  background: #00ffff;
+  color: #000;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #00cccc;
+}
+
+#feedback {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+#score, #timer {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #00ffcc;
+}
+
+#credits {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #ccc;
+  font-style: italic;
+}
+
+.hidden {
+  display: none;
+}
+
 
 
