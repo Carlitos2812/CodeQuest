@@ -1,103 +1,100 @@
+const startButton = document.getElementById("start-button");
+const startScreen = document.getElementById("start-screen");
+const gameScreen = document.getElementById("game-screen");
 const form = document.getElementById("game-form");
 const input = document.getElementById("user-input");
 const feedback = document.getElementById("feedback");
 const questionEl = document.getElementById("question");
-const startBtn = document.getElementById("start-btn");
-const startScreen = document.getElementById("start-screen");
-const gameContainer = document.getElementById("game-container");
-
-const questions = [
-  { question: "What punctuation ends a question?", answer: "?" },
-  { question: "What punctuation ends a sentence?", answer: "." },
-  { question: "What punctuation shows excitement?", answer: "!" },
-  { question: "What punctuation is used in a contraction like can't?", answer: "'" },
-  { question: "What punctuation separates items in a list?", answer: "," },
-  { question: "What punctuation is used for dialogue?", answer: "\"" },
-  { question: "What punctuation is used to join two independent clauses?", answer: ";" },
-  { question: "What punctuation introduces a list?", answer: ":" },
-  { question: "What punctuation shows possession?", answer: "'" },
-  { question: "What punctuation goes at the end of a command?", answer: "." },
-  { question: "What punctuation is used in parentheses?", answer: ")" },
-  { question: "What punctuation marks an omission or pause?", answer: "..." },
-  { question: "What punctuation is used in web addresses?", answer: "/" },
-  { question: "What punctuation is used to connect words like well-known?", answer: "-" },
-  { question: "What punctuation is used in email addresses?", answer: "@" }
-];
-
-let current = 0;
-let score = 0;
-let timer;
-const timeLimit = 30;
-let timeLeft = timeLimit;
-
 const scoreDisplay = document.getElementById("score");
 const timerDisplay = document.getElementById("timer");
 
-startBtn.addEventListener("click", () => {
-  startScreen.classList.add("hidden");
-  gameContainer.classList.remove("hidden");
-  showQuestion();
-});
+const preguntas = [
+  { pregunta: "¿Qué signo de puntuación termina una pregunta? / What punctuation ends a question?", respuesta: "?" },
+  { pregunta: "¿Qué signo de puntuación termina una oración? / What punctuation ends a sentence?", respuesta: "." },
+  { pregunta: "¿Qué signo muestra emoción o sorpresa? / What punctuation shows excitement?", respuesta: "!" },
+  { pregunta: "¿Qué signo se usa en contracciones como can't? / What punctuation is used in contractions like can't?", respuesta: "'" },
+  { pregunta: "¿Qué signo separa elementos en una lista? / What punctuation separates items in a list?", respuesta: "," },
+  { pregunta: "¿Qué signo se usa para el diálogo? / What punctuation is used for dialogue?", respuesta: "\"" },
+  { pregunta: "¿Qué signo une dos oraciones independientes? / What punctuation joins two independent clauses?", respuesta: ";" },
+  { pregunta: "¿Qué signo introduce una lista? / What punctuation introduces a list?", respuesta: ":" },
+  { pregunta: "¿Qué signo muestra posesión? / What punctuation shows possession?", respuesta: "'" },
+  { pregunta: "¿Qué signo se usa al final de una orden? / What punctuation ends a command?", respuesta: "." },
+  { pregunta: "¿Qué signo se encuentra en los paréntesis? / What punctuation is used in parentheses?", respuesta: ")" },
+  { pregunta: "¿Qué signo marca una omisión o pausa? / What punctuation marks an omission or pause?", respuesta: "..." },
+  { pregunta: "¿Qué signo se usa en direcciones web? / What punctuation is used in web addresses?", respuesta: "/" },
+  { pregunta: "¿Qué signo conecta palabras como bienvenido? / What punctuation connects words like well-known?", respuesta: "-" },
+  { pregunta: "¿Qué signo se usa en correos electrónicos? / What punctuation is used in email addresses?", respuesta: "@" }
+];
 
-function startTimer() {
-  clearInterval(timer);
-  timeLeft = timeLimit;
-  timerDisplay.innerText = `Time left: ${timeLeft}s`;
+let actual = 0;
+let puntaje = 0;
+let temporizador;
+const limiteTiempo = 30;
+let tiempoRestante = limiteTiempo;
 
-  timer = setInterval(() => {
-    timeLeft--;
-    timerDisplay.innerText = `Time left: ${timeLeft}s`;
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      score -= 5;
-      feedback.innerText = "⏰ Time's up! −5 points.";
-      updateScore();
-      nextLevel();
+function actualizarPuntaje() {
+  scoreDisplay.innerText = `Puntaje: ${puntaje}`;
+}
+
+function iniciarTemporizador() {
+  clearInterval(temporizador);
+  tiempoRestante = limiteTiempo;
+  timerDisplay.innerText = `Tiempo: ${tiempoRestante}s`;
+
+  temporizador = setInterval(() => {
+    tiempoRestante--;
+    timerDisplay.innerText = `Tiempo: ${tiempoRestante}s`;
+    if (tiempoRestante <= 0) {
+      clearInterval(temporizador);
+      feedback.innerText = "⏰ ¡Tiempo agotado! −5 puntos.";
+      puntaje -= 5;
+      actualizarPuntaje();
+      siguienteNivel();
     }
   }, 1000);
 }
 
-function updateScore() {
-  scoreDisplay.innerText = `Score: ${score}`;
-}
-
-function showQuestion() {
-  if (current < questions.length && current < 15) {
-    questionEl.innerText = `Level ${current + 1}: ${questions[current].question}`;
+function mostrarPregunta() {
+  if (actual < preguntas.length) {
+    questionEl.innerText = `Nivel ${actual + 1}: ${preguntas[actual].pregunta}`;
     input.value = "";
     feedback.innerText = "";
     input.focus();
-    startTimer();
+    iniciarTemporizador();
   } else {
-    endGame();
+    finalizarJuego();
   }
 }
 
-function endGame() {
-  clearInterval(timer);
-  questionEl.innerText = `🎉 Game Over! Your final score is: ${score}`;
+function siguienteNivel() {
+  actual++;
+  setTimeout(mostrarPregunta, 1000);
+}
+
+function finalizarJuego() {
+  clearInterval(temporizador);
+  questionEl.innerText = `🎉 ¡Juego terminado! Tu puntaje final es: ${puntaje}`;
   form.style.display = "none";
   timerDisplay.style.display = "none";
 }
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const userAnswer = input.value.trim();
-  clearInterval(timer);
-  if (userAnswer === questions[current].answer) {
-    feedback.innerText = "✅ Correct!";
-    score += 10;
+  const respuestaUsuario = input.value.trim();
+  clearInterval(temporizador);
+  if (respuestaUsuario === preguntas[actual].respuesta) {
+    feedback.innerText = "✅ ¡Correcto!";
+    puntaje += 10;
   } else {
-    feedback.innerText = "❌ Incorrect! −5 points.";
-    score -= 5;
+    feedback.innerText = "❌ Incorrecto. −5 puntos.";
+    puntaje -= 5;
   }
-  updateScore();
-  nextLevel();
+  actualizarPuntaje();
+  siguienteNivel();
 });
 
-function nextLevel() {
-  current++;
-  setTimeout(() => {
-    showQuestion();
-  }, 1000);
-}
+startButton.addEventListener("click", () => {
+  startScreen.style.display = "none";
+  gameScreen.style.display = "block";
+  mostrarPregunta();
+});
