@@ -7,19 +7,22 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
   <div class="container">
     <div id="start-screen">
       <h1>🚀 CodeQuest: Punctuation Master</h1>
       <button id="start-btn">Play</button>
       <div class="credits">
-        <p>Con ayuda de la profesora Mafecita y el profesor Pedrito ✨</p>
+        <p>Con ayuda de la profe <span class="shine">Mafecita</span> y el profe <span class="shine">Pedrito</span> ✨</p>
       </div>
     </div>
 
     <div id="game-container" class="hidden">
       <h2 id="question"></h2>
       <form id="game-form">
-        <input type="text" id="user-input" autocomplete="off" placeholder="Your answer..." />
+        <input type="text" id="user-input" autocomplete="off" placeholder="Your answer..." required />
         <button type="submit">Submit</button>
       </form>
       <p id="feedback"></p>
@@ -28,7 +31,6 @@
     </div>
   </div>
 
-  <audio id="bg-music" src="bg-music.mp3" loop></audio>
   <script src="script.js"></script>
 </body>
 </html>
