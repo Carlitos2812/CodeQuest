@@ -1,71 +1,123 @@
-body {
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Courier New', Courier, monospace;
-  background: radial-gradient(ellipse at center, #0d0d2b 0%, #000000 100%);
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: radial-gradient(ellipse at center, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
   color: #ffffff;
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+  align-items: center;
+  text-align: center;
+  position: relative;
 }
 
 .container {
-  text-align: center;
+  position: relative;
+  z-index: 10;
+  background-color: rgba(0, 0, 50, 0.8);
   padding: 30px;
-  background-color: rgba(20, 20, 50, 0.85);
-  border-radius: 20px;
-  box-shadow: 0 0 25px #3cf;
-  max-width: 500px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #0ff;
   width: 90%;
+  max-width: 600px;
 }
 
-h1, h2 {
-  color: #90e0ef;
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #00ffff;
+  text-shadow: 0 0 10px #0ff;
 }
 
-input[type="text"] {
+h2 {
+  margin-bottom: 20px;
+}
+
+input {
   padding: 10px;
-  font-size: 1rem;
   width: 70%;
-  border-radius: 8px;
+  font-size: 1rem;
+  border-radius: 5px;
   border: none;
-  margin-bottom: 10px;
+  margin-right: 10px;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 10px 15px;
   font-size: 1rem;
-  background-color: #3a0ca3;
+  background-color: #00bfff;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  box-shadow: 0 0 5px #00bfff;
 }
 
 button:hover {
-  background-color: #4361ee;
+  background-color: #00ffff;
 }
 
 #feedback {
   margin-top: 10px;
   font-size: 1.2rem;
-  font-weight: bold;
 }
 
 #score, #timer {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: #ffd700;
+}
+
+.credits {
   margin-top: 15px;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.shine {
+  color: #ff66cc;
+  text-shadow: 0 0 10px #ff66cc, 0 0 20px #ff66cc;
+  animation: shine 1.5s infinite alternate;
+}
+
+@keyframes shine {
+  from { text-shadow: 0 0 5px #ff66cc; }
+  to { text-shadow: 0 0 20px #ff66cc, 0 0 30px #ff66cc; }
 }
 
 .hidden {
   display: none;
 }
 
-.credits {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #ccc;
+/* Galaxia - estrellas animadas */
+.stars, .stars2, .stars3 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: transparent url('https://raw.githubusercontent.com/VincentGarreau/particles.js/master/demo/media/stars.png') repeat;
+  z-index: 0;
+  animation: moveStars 200s linear infinite;
+}
+
+.stars2 {
+  background-size: 150px;
+  opacity: 0.5;
+  animation: moveStars 400s linear infinite;
+}
+
+.stars3 {
+  background-size: 100px;
+  opacity: 0.2;
+  animation: moveStars 600s linear infinite;
+}
+
+@keyframes moveStars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1000px); }
 }
