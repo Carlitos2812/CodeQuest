@@ -1,21 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>CodeQuest - Punctuation Master</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-</head>
-<body>
-  <div class="container">
-    <h1>CodeQuest - Punctuation Master</h1>
-    <h2 id="question">Loading question...</h2>
-    <form id="game-form">
-      <input id="user-input" type="text" autocomplete="off" placeholder="Type your answer" required />
-      <button type="submit">Submit</button>
-    </form>
-    <p id="feedback"></p>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
+const form = document.getElementById("game-form");
+const input = document.getElementById("user-input");
+const feedback = document.getElementById("feedback");
+const questionEl = document.getElementById("question");
+
+const questions = [
+  { question: "What punctuation ends a question?", answer: "?" },
+  { question: "What punctuation ends a sentence?", answer: "." },
+  { question: "What punctuation shows excitement?", answer: "!" },
+  { question: "What punctuation is used in a contraction like can't?", answer: "'" },
+  { question: "What punctuation separates items in a list?", answer: "," },
+  { question: "What punctuation is used for dialogue?", answer: "\"" },
+  { question: "What punctuation is used to join two independent clauses?", answer: ";" },
+  { question: "What punctuation introduces a list?", answer: ":" },
+  { question: "What punctuation shows possession?", answer: "'" },
+  { question: "What punctuation goes at the end of a command?", answer: "." },
+  { question: "What punctuation is used in parentheses?", answer: ")" },
+  { question: "What punctuation marks an omission or pause?", answer: "..." },
+  { question: "What punctuation is used in web addresses?", answer: "/" },
+  { question: "What punctuation is used to connect words like well-known?", answer: "-" },
+  { question: "What punctuation is used in email addresses?", answer: "@" }
+  // Cortado a 15 niveles como pediste
+];
+
+let current = 0;
+let score = 0;
+let timer;
+let timeLeft = 30;
+
+const timerDisplay = document.createElement("p");
+const scoreDisplay = document.createElement("p");
+document.querySelector(".container").appendChild(timerDisplay);
+document.querySelector(".container").appendChild(scoreDisplay);
+
+function updateScore() {
+  scoreDisplay.innerText = `Score: ${score}`;
+}
+
+function startTimer() {
+  clearInterval(timer);
+  timeLeft = 30;
+  timerDisplay.innerText = `Time: ${timeLeft}s`;
+  timer = setInterval(() => {
+    timeLeft--;
+    timerDisplay.innerText = `Time: ${timeLeft}s`;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      feedback.innerText = "⏰ Time's up! -5 points.";
+      score -= 5;
+      updateScore();
+      current++;
+      setTimeout(showQuestion, 1500);
+    }
+  }, 1000);
+}
+
+function showQuestion() {
+  if (current < questions.length) {
+    questionEl.innerText = `Level ${current + 1}: ${questions[current].question}`;
+    input.value = "";
+    feedback.innerText = "";
+    input.focus();
+    updateScore();
+    startTimer();
+  } else {
+    clearInterval(timer);
+    questionEl.innerText = `🎉 You finished all 15 levels! Final score: ${score}`;
+    form.style.display = "none";
+    timerDisplay.style.display = "none";
+  }
+}
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const userAnswer = input.value.trim();
+  if (userAnswer === questions[current].answer) {
+    feedback.innerText = "✅ Correct! +10 points.";
+    score += 10;
+    current++;
+    clearInterval(timer);
+    setTimeout(showQuestion, 1000);
+  } else {
+    feedback.innerText = "❌ Incorrect! -5 points.";
+    score -= 5;
+    updateScore();
+  }
+});
+
+showQuestion();
