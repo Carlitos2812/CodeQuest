@@ -1,83 +1,127 @@
-// ================================
-// 🌌 CODEQUEST UNIVERSE MAIN SCRIPT
-// ================================
+// Botones del menú principal
+const btnPunctuation = document.getElementById("btn-punctuation");
+const btnScience = document.getElementById("btn-science");
+const btnSocial = document.getElementById("btn-social");
+const btnMemory = document.getElementById("btn-memory");
 
-// --- Pantallas ---
+// Pantallas
 const mainMenu = document.getElementById("main-menu");
 const gameScreen = document.getElementById("game-screen");
 const scienceScreen = document.getElementById("science-screen");
 const socialScreen = document.getElementById("social-screen");
 const memoryScreen = document.getElementById("memory-screen");
 
-// --- Botones del menú ---
-const btnPunctuation = document.getElementById("btn-punctuation");
-const btnScience = document.getElementById("btn-science");
-const btnSocial = document.getElementById("btn-social");
-const btnMemory = document.getElementById("btn-memory");
+// Botones "Volver"
 const backButtons = document.querySelectorAll(".back-btn");
 
-// ================================
-// 🧩 JUEGO: Punctuation Master
-// ================================
+// Elementos del juego original
 const form = document.getElementById("game-form");
 const input = document.getElementById("user-input");
 const feedback = document.getElementById("feedback");
 const questionEl = document.getElementById("question");
 const scoreDisplay = document.getElementById("score");
 const timerDisplay = document.getElementById("timer");
-const languageSelect = document.getElementById("language-select");
 const submitButton = document.getElementById("submit-btn");
-const backToMenuBtn = document.getElementById("back-to-menu");
 
-let language = "en";
+let language = "es";
 let current = 0;
 let score = 0;
 let timer;
 const timeLimit = 30;
 let timeLeft = timeLimit;
 
-// ================================
-// 🧠 BASE DE PREGUNTAS
-// ================================
-const questions = {
-  en: [
-    { question: "What punctuation ends a question?", answer: "?" },
-    { question: "What punctuation ends a sentence?", answer: "." },
-    { question: "What punctuation shows excitement?", answer: "!" },
-    { question: "What punctuation is used in a contraction like can't?", answer: "'" },
-    { question: "What punctuation separates items in a list?", answer: "," },
-    { question: "What punctuation is used for dialogue?", answer: "\"" },
-    { question: "What punctuation joins two clauses?", answer: ";" },
-    { question: "What punctuation introduces a list?", answer: ":" },
-    { question: "What punctuation shows possession?", answer: "'" },
-    { question: "What punctuation ends a command?", answer: "." },
-    { question: "What punctuation is used in parentheses?", answer: ")" },
-    { question: "What punctuation marks a pause or omission?", answer: "..." },
-    { question: "What punctuation is used in web addresses?", answer: "/" },
-    { question: "What punctuation connects words like well-known?", answer: "-" },
-    { question: "What punctuation is used in email addresses?", answer: "@" }
-  ],
-  es: [
-    { question: "¿Qué signo de puntuación termina una pregunta?", answer: "?" },
-    { question: "¿Qué signo de puntuación termina una oración?", answer: "." },
-    { question: "¿Qué signo muestra emoción?", answer: "!" },
-    { question: "¿Qué signo se usa en contracciones como 'no puedo' (can't)?", answer: "'" },
-    { question: "¿Qué signo separa elementos en una lista?", answer: "," },
-    { question: "¿Qué signo se usa para el diálogo?", answer: "\"" },
-    { question: "¿Qué signo une dos oraciones independientes?", answer: ";" },
-    { question: "¿Qué signo introduce una lista?", answer: ":" },
-    { question: "¿Qué signo muestra posesión?", answer: "'" },
-    { question: "¿Qué signo termina un mandato o instrucción?", answer: "." },
-    { question: "¿Qué signo se usa entre paréntesis?", answer: ")" },
-    { question: "¿Qué signo indica una pausa u omisión?", answer: "..." },
-    { question: "¿Qué signo se usa en direcciones web?", answer: "/" },
-    { question: "¿Qué signo une palabras como 'bien-estar'?", answer: "-" },
-    { question: "¿Qué signo se usa en correos electrónicos?", answer: "@" }
-  ]
-};
+// Preguntas del Punctuation Master
+const questions = [
+  { question: "¿Qué signo de puntuación termina una pregunta?", answer: "?" },
+  { question: "¿Qué signo de puntuación termina una oración?", answer: "." },
+  { question: "¿Qué signo muestra emoción?", answer: "!" },
+  { question: "¿Qué signo separa elementos en una lista?", answer: "," },
+  { question: "¿Qué signo se usa en direcciones web?", answer: "/" },
+  { question: "¿Qué signo une palabras como 'bien-estar'?", answer: "-" },
+  { question: "¿Qué signo se usa en correos electrónicos?", answer: "@" }
+];
 
-// ================================
-// ⚙️ FUNCIONES DEL JUEGO
-// ================================
+// 🔹 FUNCIONES DEL MENÚ
+btnPunctuation.addEventListener("click", () => showScreen(gameScreen));
+btnScience.addEventListener("click", () => showScreen(scienceScreen));
+btnSocial.addEventListener("click", () => showScreen(socialScreen));
+btnMemory.addEventListener("click", () => showScreen(memoryScreen));
+
+backButtons.forEach(btn => {
+  btn.addEventListener("click", () => showScreen(mainMenu));
+});
+
+function showScreen(screen) {
+  [mainMenu, gameScreen, scienceScreen, socialScreen, memoryScreen].forEach(s => s.style.display = "none");
+  screen.style.display = "block";
+  if (screen === gameScreen) startGame();
+}
+
+// 🔹 FUNCIONES DEL JUEGO ORIGINAL
 function updateScore() {
-  
+  scoreDisplay.innerText = `Puntaje: ${score}`;
+}
+
+function startTimer() {
+  clearInterval(timer);
+  timeLeft = timeLimit;
+  timerDisplay.innerText = `⏱️ ${timeLeft}s`;
+  timer = setInterval(() => {
+    timeLeft--;
+    timerDisplay.innerText = `⏱️ ${timeLeft}s`;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      score -= 5;
+      feedback.innerText = "⏰ ¡Tiempo agotado! −5 puntos.";
+      updateScore();
+      nextLevel();
+    }
+  }, 1000);
+}
+
+function mostrarPregunta() {
+  if (current < questions.length) {
+    questionEl.innerText = `Nivel ${current + 1}: ${questions[current].question}`;
+    input.value = "";
+    feedback.innerText = "";
+    input.focus();
+    startTimer();
+  } else terminarJuego();
+}
+
+function terminarJuego() {
+  clearInterval(timer);
+  questionEl.innerText = `🎉 ¡Juego terminado! Puntaje final: ${score}`;
+  form.style.display = "none";
+  timerDisplay.style.display = "none";
+}
+
+function nextLevel() {
+  current++;
+  setTimeout(() => mostrarPregunta(), 1000);
+}
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  clearInterval(timer);
+  const userAnswer = input.value.trim();
+
+  if (userAnswer === questions[current].answer) {
+    feedback.innerText = "✅ ¡Correcto!";
+    score += 10;
+  } else {
+    feedback.innerText = "❌ Incorrecto −5 puntos.";
+    score -= 5;
+  }
+  updateScore();
+  nextLevel();
+});
+
+function startGame() {
+  score = 0;
+  current = 0;
+  form.style.display = "block";
+  timerDisplay.style.display = "block";
+  updateScore();
+  mostrarPregunta();
+}
